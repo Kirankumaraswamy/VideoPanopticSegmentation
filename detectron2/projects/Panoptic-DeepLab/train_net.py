@@ -65,7 +65,7 @@ class Trainer(DefaultTrainer):
             output_folder = os.path.join(cfg.OUTPUT_DIR, "inference")
         evaluator_list = []
         evaluator_type = MetadataCatalog.get(dataset_name).evaluator_type
-        if evaluator_type in ["cityscapes_panoptic_seg", "coco_panoptic_seg"]:
+        if evaluator_type in ["cityscapes_panoptic_seg", "coco_panoptic_seg", "kitti_panoptic_seg"]:
             evaluator_list.append(COCOPanopticEvaluator(dataset_name, output_folder))
         if evaluator_type == "cityscapes_panoptic_seg":
             evaluator_list.append(CityscapesSemSegEvaluator(dataset_name))

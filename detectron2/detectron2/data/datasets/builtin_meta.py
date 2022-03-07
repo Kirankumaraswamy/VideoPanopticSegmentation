@@ -224,6 +224,29 @@ CITYSCAPES_CATEGORIES = [
     {"color": (119, 11, 32), "isthing": 1, "id": 33, "trainId": 18, "name": "bicycle"},
 ]
 
+KITTI_CATEGORIES = [
+    {"color": (128, 64, 128), "isthing": 1, "id": 0, "trainId": 0, "name": "car"},
+    {"color": (244, 35, 232), "isthing": 1, "id": 1, "trainId": 1, "name": "bicycle"},
+    {"color": (70, 70, 70), "isthing": 1, "id": 2, "trainId": 2, "name": "motorcycle"},
+    {"color": (102, 102, 156), "isthing": 1, "id": 3, "trainId": 3, "name": "truck"},
+    {"color": (190, 153, 153), "isthing": 1, "id": 4, "trainId": 4, "name": "other-vehicle"},
+    {"color": (153, 153, 153), "isthing": 1, "id": 5, "trainId": 5, "name": "person"},
+    {"color": (250, 170, 30), "isthing": 1, "id": 6, "trainId": 6, "name": "bicyclist"},
+    {"color": (220, 220, 0), "isthing": 1, "id": 7, "trainId": 7, "name": "motorcyclist"},
+    {"color": (107, 142, 35), "isthing": 0, "id": 8, "trainId": 8, "name": "road"},
+    {"color": (152, 251, 152), "isthing": 0, "id": 9, "trainId": 9, "name": "parking"},
+    {"color": (70, 130, 180), "isthing": 0, "id": 10, "trainId": 10, "name": "sidewalk"},
+    {"color": (220, 20, 60), "isthing": 0, "id": 11, "trainId": 11, "name": "other-ground"},
+    {"color": (255, 0, 0), "isthing": 0, "id": 12, "trainId": 12, "name": "building"},
+    {"color": (0, 0, 142), "isthing": 0, "id": 13, "trainId": 13, "name": "fence"},
+    {"color": (0, 0, 70), "isthing": 0, "id": 14, "trainId": 14, "name": "vegetation"},
+    {"color": (0, 60, 100), "isthing": 0, "id": 15, "trainId": 15, "name": "trunk"},
+    {"color": (0, 80, 100), "isthing": 0, "id": 16, "trainId": 16, "name": "terrain"},
+    {"color": (0, 0, 230), "isthing": 0, "id": 17, "trainId": 17, "name": "pole"},
+    {"color": (119, 11, 32), "isthing": 0, "id": 18, "trainId": 18, "name": "traffic-sign"},
+]
+
+
 # fmt: off
 ADE20K_SEM_SEG_CATEGORIES = [
     "wall", "building", "sky", "floor", "tree", "ceiling", "road, route", "bed", "window ", "grass", "cabinet", "sidewalk, pavement", "person", "earth, ground", "door", "table", "mountain, mount", "plant", "curtain", "chair", "car", "water", "painting, picture", "sofa", "shelf", "house", "sea", "mirror", "rug", "field", "armchair", "seat", "fence", "desk", "rock, stone", "wardrobe, closet, press", "lamp", "tub", "rail", "cushion", "base, pedestal, stand", "box", "column, pillar", "signboard, sign", "chest of drawers, chest, bureau, dresser", "counter", "sand", "sink", "skyscraper", "fireplace", "refrigerator, icebox", "grandstand, covered stand", "path", "stairs", "runway", "case, display case, showcase, vitrine", "pool table, billiard table, snooker table", "pillow", "screen door, screen", "stairway, staircase", "river", "bridge, span", "bookcase", "blind, screen", "coffee table", "toilet, can, commode, crapper, pot, potty, stool, throne", "flower", "book", "hill", "bench", "countertop", "stove", "palm, palm tree", "kitchen island", "computer", "swivel chair", "boat", "bar", "arcade machine", "hovel, hut, hutch, shack, shanty", "bus", "towel", "light", "truck", "tower", "chandelier", "awning, sunshade, sunblind", "street lamp", "booth", "tv", "plane", "dirt track", "clothes", "pole", "land, ground, soil", "bannister, banister, balustrade, balusters, handrail", "escalator, moving staircase, moving stairway", "ottoman, pouf, pouffe, puff, hassock", "bottle", "buffet, counter, sideboard", "poster, posting, placard, notice, bill, card", "stage", "van", "ship", "fountain", "conveyer belt, conveyor belt, conveyer, conveyor, transporter", "canopy", "washer, automatic washer, washing machine", "plaything, toy", "pool", "stool", "barrel, cask", "basket, handbasket", "falls", "tent", "bag", "minibike, motorbike", "cradle", "oven", "ball", "food, solid food", "step, stair", "tank, storage tank", "trade name", "microwave", "pot", "animal", "bicycle", "lake", "dishwasher", "screen", "blanket, cover", "sculpture", "hood, exhaust hood", "sconce", "vase", "traffic light", "tray", "trash can", "fan", "pier", "crt screen", "plate", "monitor", "bulletin board", "shower", "radiator", "glass, drinking glass", "clock", "flag", # noqa
@@ -347,4 +370,20 @@ def _get_builtin_metadata(dataset_name):
             "thing_classes": CITYSCAPES_THING_CLASSES,
             "stuff_classes": CITYSCAPES_STUFF_CLASSES,
         }
+    elif dataset_name == "kitti":
+        KITTI_THING_CLASSES = [
+            "car", "bicycle", "motorcycle", "truck",
+            "other-vehicle", "person", "bicyclist", "motorcyclist",
+        ]
+        KITTI_STUFF_CLASSES = [
+            "road", "parking", "sidewalk", "other-ground", "building", "fence", "vegetation",
+            "trunk", "terrain", "pole", "traffic-sign", "car", "bicycle", "motorcycle", "truck",
+            "other-vehicle", "person", "bicyclist", "motorcyclist",
+        ]
+        # fmt: on
+        return {
+            "thing_classes": KITTI_THING_CLASSES,
+            "stuff_classes": KITTI_STUFF_CLASSES,
+        }
+
     raise KeyError("No built-in metadata for dataset {}".format(dataset_name))

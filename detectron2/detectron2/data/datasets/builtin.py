@@ -23,7 +23,9 @@ from detectron2.data import DatasetCatalog, MetadataCatalog
 
 from .builtin_meta import ADE20K_SEM_SEG_CATEGORIES, _get_builtin_metadata
 from .cityscapes import load_cityscapes_instances, load_cityscapes_semantic
+from .kitti import load_kitti_instances, load_kitti_semantic
 from .cityscapes_panoptic import register_all_cityscapes_panoptic
+from .kitti_panoptic import register_all_kitti_panoptic
 from .coco import load_sem_seg, register_coco_instances
 from .coco_panoptic import register_coco_panoptic, register_coco_panoptic_separated
 from .lvis import get_lvis_instances_meta, register_lvis_instances
@@ -180,7 +182,6 @@ _RAW_CITYSCAPES_SPLITS = {
     "cityscapes_fine_{task}_test": ("cityscapes/leftImg8bit/test/", "cityscapes/gtFine/test/"),
 }
 
-
 def register_all_cityscapes(root):
     for key, (image_dir, gt_dir) in _RAW_CITYSCAPES_SPLITS.items():
         meta = _get_builtin_metadata("cityscapes")
@@ -210,6 +211,42 @@ def register_all_cityscapes(root):
             **meta,
         )
 
+# ==== Predefined splits for raw cityscapes images ===========
+_RAW_KITTI_SPLITS = {
+    "kitti_{task}_train": ("kitti/video_sequence/train", "kitti/video_sequence/kitti_panoptic_train"),
+    "kitti_{task}_val": ("kitti/video_sequence/val/", "kitti/video_sequence/kitti_panoptic_val"),
+}
+
+def register_all_kitti(root):
+    for key, (image_dir, gt_dir) in _RAW_CITYSCAPES_SPLITS.items():
+        # since cityscapes and kitti has same classes
+        meta = _get_builtin_metadata("kitti")
+        image_dir = os.path.join(root, image_dir)
+        gt_dir = os.path.join(root, gt_dir)
+
+        inst_key = key.format(task="instance_seg")
+        DatasetCatalog.register(
+            inst_key,
+            lambda x=image_dir, y=gt_dir: load_kitti_instances(
+                x, y, from_json=True, to_polygons=True
+            ),
+        )
+        MetadataCatalog.get(inst_key).set(
+            image_dir=image_dir, gt_dir=gt_dir, evaluator_type="kitti_instance", **meta
+        )
+
+        sem_key = key.format(task="sem_seg")
+        DatasetCatalog.register(
+            sem_key, lambda x=image_dir, y=gt_dir: load_kitti_semantic(x, y)
+        )
+        MetadataCatalog.get(sem_key).set(
+            image_dir=image_dir,
+            gt_dir=gt_dir,
+            evaluator_type="kitti_sem_seg",
+            ignore_label=255,
+            **meta,
+        )
+    return
 
 # ==== Predefined splits for PASCAL VOC ===========
 def register_all_pascal_voc(root):
@@ -257,3 +294,4 @@ if __name__.endswith(".builtin"):
     register_all_cityscapes_panoptic(_root)
     register_all_pascal_voc(_root)
     register_all_ade20k(_root)
+    register_all_kitti_panoptic(_root)
