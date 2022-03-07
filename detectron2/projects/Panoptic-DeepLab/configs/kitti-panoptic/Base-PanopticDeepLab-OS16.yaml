@@ -40,7 +40,7 @@ MODEL:
     TOP_K_INSTANCE: 200
 DATASETS:
   TRAIN: ("kitti_panoptic_train",)
-  TEST: ("kitti_panoptic_train",)
+  TEST: ("kitti_panoptic_val",)
 SOLVER:
   OPTIMIZER: "ADAM"
   BASE_LR: 0.001

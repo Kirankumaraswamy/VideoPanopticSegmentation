@@ -113,16 +113,11 @@ _RAW_KITTI_PANOPTIC_SPLITS = {
         "kitti/video_sequence/kitti_panoptic_train.json",
     ),
     "kitti_panoptic_val": (
-        "kitti/video_sequence/train",
-        "kitti/video_sequence/kitti_panoptic_train",
-        "kitti/video_sequence/kitti_panoptic_train.json",
+        "kitti/video_sequence/val",
+        "kitti/video_sequence/kitti_panoptic_val",
+        "kitti/video_sequence/kitti_panoptic_val.json",
     ),
-    "kitti_panoptic_test": (
-            "kitti/video_sequence/train",
-            "kitti/video_sequence/kitti_panoptic_train",
-            "kitti/video_sequence/kitti_panoptic_train.json",
-        ),
-    # "cityscapes_fine_panoptic_test": not supported yet
+    # "kitti_panoptic_test": not supported yet
 }
 
 
